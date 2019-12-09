@@ -15,7 +15,7 @@ class AdminConType extends AbstractType
     {
         $builder
             ->add('mail', EmailType::class)
-            ->add('mdp', PasswordType::class)
+            ->add('mdp', PasswordType::class, [ 'label' => 'Mot de Passe'])
 
         ;
     }
