@@ -92,6 +92,7 @@ class AdminController extends AbstractController {
             $user = $this->em->getRepository(Admin::class)->findOneByEmail($userData->getMail());
 
 
+
             if($user)
             {
 
@@ -156,38 +157,31 @@ class AdminController extends AbstractController {
     public function modifier(Request $request, Admin $admin){
 
         //dd($admin);
-        $form = $this->createForm(AdminType::class);
+        $form = $this->createForm(AdminType::class, $admin);
         $form->handleRequest($request);
 
 
 
         if($form->isSubmitted() && $form->isValid()){
 
-            $userData = $form->getData();
+            $this->em->flush();
             //dd($userData);
-            $user = $this->em->getRepository(Admin::class)->findOneByEmail($userData->getMail());
+            $user = $this->em->getRepository(Admin::class)->findOneByEmail($admin->getMail());
 
 
             if($user)
             {
 
-                $user->setName($userData->getName());
-                $user->setMail($userData->getMail());
-                $user->setMdp($userData->getMdp());
-                $user->setPhone($userData->getPhone());
-                //dd($user->getName());
-
-                $this->session->set('id', $user->getId());
-                $this->session->set('name', $user->getName());
-                $this->session->set('phone', $user->getPhone());
-                $this->session->set('mail', $user->getMail());
-                $this->session->set('mdp', $user->getMdp());
+                $this->session->set('id', $admin->getId());
+                $this->session->set('name', $admin->getName());
+                $this->session->set('phone', $admin->getPhone());
+                $this->session->set('mail', $admin->getMail());
                 $this->addFlash('success', 'Profil édité avec succès');
                 $properties = $this->prep->findByUser($user->getId());
 
                 $this->em->flush();
                 return $this->render('admin/property/index.html.twig', [
-                    'admin'=>$user->getId(),
+                    'admin'=>$admin->getId(),
                     'properties'=>$properties
 
                 ]);
