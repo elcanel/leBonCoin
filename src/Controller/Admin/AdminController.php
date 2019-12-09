@@ -43,13 +43,13 @@ class AdminController extends AbstractController {
     }
 
     /**
-     * @Route("/admin", name="admin.Property.index")
+     * @Route("/admin", name="admin.property.index")
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index()
     {
         $properties = $this->repository->findAll();
-        return $this->render('admin/Property/index.html.twig', compact('properties'));
+        return $this->render('admin/property/index.html.twig', compact('properties'));
     }
 
 
@@ -105,7 +105,7 @@ class AdminController extends AbstractController {
                     $properties = $this->prep->findByUser($user->getId());
 
 
-                    return $this->render('admin/Property/index.html.twig', [
+                    return $this->render('admin/property/index.html.twig', [
                         'admin'=>$user->getId(),
                         'properties'=>$properties
 
@@ -186,7 +186,7 @@ class AdminController extends AbstractController {
                 $properties = $this->prep->findByUser($user->getId());
 
                 $this->em->flush();
-                return $this->render('admin/Property/index.html.twig', [
+                return $this->render('admin/property/index.html.twig', [
                     'admin'=>$user->getId(),
                     'properties'=>$properties
 
