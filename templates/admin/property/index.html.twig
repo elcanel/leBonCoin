@@ -27,8 +27,8 @@
             <td>{{ Property.title }}</td>
             <td>
 
-                <a href="/admin/{{ admin }}/Property/{{ Property.getId() }}" class="btn btn-secondary">Editer</a>
-                <form method="post" action="/admin/{{ admin }}/Property/{{ Property.getId() }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous vraiment sûr de vouloir supprimer votre bien ?')">
+                <a href="/admin/{{ admin }}/property/{{ Property.getId() }}" class="btn btn-secondary">Editer</a>
+                <form method="post" action="/admin/{{ admin }}/property/{{ Property.getId() }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous vraiment sûr de vouloir supprimer votre bien ?')">
                 <input type="hidden" name="_method" value="DELETE">
                 <button class="btn btn-danger">Supprimer</button>
                 </form>
@@ -45,7 +45,7 @@
     </table>
 
     <div class="text-right">
-        <a href="/admin/{{ admin }}/Property/create" class="btn btn-primary">Créer un nouveau bien</a>
+        <a href="/admin/{{ admin }}/property/create" class="btn btn-primary">Créer un nouveau bien</a>
     </div>
 
     <br>

@@ -53,7 +53,7 @@ class AdminPropertyController extends AbstractController {
     }
 
     /**
-     * @Route("/admin/{id}/Property/create", name="admin.Property.new")
+     * @Route("/admin/{id}/property/create", name="admin.Property.new")
      * @param Admin $admin
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -95,7 +95,7 @@ class AdminPropertyController extends AbstractController {
     }
 
     /**
-     * @Route("/admin/{idad}/Property/{id}", name="admin.Property.edit", methods="GET|POST")
+     * @Route("/admin/{idad}/property/{id}", name="admin.Property.edit", methods="GET|POST")
      * @param Property $Property
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -120,7 +120,7 @@ class AdminPropertyController extends AbstractController {
     }
 
     /**
-     * @Route("/admin/{idad}/Property/{id}", name="admin.Property.delete", methods="DELETE")
+     * @Route("/admin/{idad}/property/{id}", name="admin.Property.delete", methods="DELETE")
      * @param Property $Property
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
