@@ -36,7 +36,7 @@ class AdminPropertyController extends AbstractController {
     }
 
     /**
-     * @Route("/admin/{id}", name="admin.property.index")
+     * @Route("/admin/{id}", name="admin.Property.index")
      * @param Admin $admin
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -53,7 +53,7 @@ class AdminPropertyController extends AbstractController {
     }
 
     /**
-     * @Route("/admin/{id}/property/create", name="admin.property.new")
+     * @Route("/admin/{id}/Property/create", name="admin.Property.new")
      * @param Admin $admin
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -78,7 +78,7 @@ class AdminPropertyController extends AbstractController {
 
 
 
-            return $this->redirectToRoute('admin.property.edit', [
+            return $this->redirectToRoute('admin.Property.edit', [
                 'idad' => $this->session->get('id'),
                 'id' => $Property->getId()
             ]);
@@ -95,7 +95,7 @@ class AdminPropertyController extends AbstractController {
     }
 
     /**
-     * @Route("/admin/{idad}/property/{id}", name="admin.property.edit", methods="GET|POST")
+     * @Route("/admin/{idad}/Property/{id}", name="admin.Property.edit", methods="GET|POST")
      * @param Property $Property
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -110,7 +110,7 @@ class AdminPropertyController extends AbstractController {
         if($form->isSubmitted() && $form->isValid()){
             $this->em->flush();
             $this->addFlash('success', 'Edité avec succès');
-            return $this->redirectToRoute('admin.property.index', ['id' => $this->session->get('id')] );
+            return $this->redirectToRoute('admin.Property.index', ['id' => $this->session->get('id')] );
         }
         return $this->render('admin/property/edit.html.twig', [
             'admin' => $this->session->get('id'),
@@ -120,7 +120,7 @@ class AdminPropertyController extends AbstractController {
     }
 
     /**
-     * @Route("/admin/{idad}/property/{id}", name="admin.property.delete", methods="DELETE")
+     * @Route("/admin/{idad}/Property/{id}", name="admin.Property.delete", methods="DELETE")
      * @param Property $Property
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -131,6 +131,6 @@ class AdminPropertyController extends AbstractController {
         $this->em->remove($Property);
         $this->em->flush();
         $this->addFlash('success', 'Supprimé avec succès');
-        return $this->redirectToRoute('admin.property.index', ['id' => $this->session->get('id')]);
+        return $this->redirectToRoute('admin.Property.index', ['id' => $this->session->get('id')]);
     }
 }

@@ -39,7 +39,7 @@ class PropertyController extends AbstractController
     }
 
     /**
-     * @Route("/biens", name="property.index")
+     * @Route("/biens", name="Property.index")
      * @return Response
      */
     public function index(Request $request): Response {
@@ -130,7 +130,7 @@ class PropertyController extends AbstractController
     }
 
     /**
-     * @Route("/biens/{slug}-{id}", name="property.show", requirements={"slug": "[a-z0-9\-]*"})
+     * @Route("/biens/{slug}-{id}", name="Property.show", requirements={"slug": "[a-z0-9\-]*"})
      * @param Property $Property
      * @return Response
      */
@@ -138,7 +138,7 @@ class PropertyController extends AbstractController
     {
 
         if ($Property->getSlug() !== $slug){
-            return $this->render('property/show.html.twig', [
+            return $this->redirectToRoute('Property.show', [
                 'id' => $Property->getId(),
                 'slug'=> $Property->getSlug()
             ], 301);
