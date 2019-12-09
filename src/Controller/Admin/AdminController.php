@@ -49,7 +49,7 @@ class AdminController extends AbstractController {
     public function index()
     {
         $properties = $this->repository->findAll();
-        return $this->render('admin/property/index.html.twig', compact('properties'));
+        return $this->render('admin/Property/index.html.twig', compact('properties'));
     }
 
 
@@ -105,7 +105,7 @@ class AdminController extends AbstractController {
                     $properties = $this->prep->findByUser($user->getId());
 
 
-                    return $this->render('admin/property/index.html.twig', [
+                    return $this->render('admin/Property/index.html.twig', [
                         'admin'=>$user->getId(),
                         'properties'=>$properties
 
@@ -186,7 +186,7 @@ class AdminController extends AbstractController {
                 $properties = $this->prep->findByUser($user->getId());
 
                 $this->em->flush();
-                return $this->render('admin/property/index.html.twig', [
+                return $this->render('admin/Property/index.html.twig', [
                     'admin'=>$user->getId(),
                     'properties'=>$properties
 
