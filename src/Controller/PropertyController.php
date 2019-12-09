@@ -75,7 +75,7 @@ class PropertyController extends AbstractController
 
 
             //dd($Property);
-        return $this->render('Property/index.html.twig', [
+        return $this->render('property/index.html.twig', [
             'properties' => $Property,
             'current_menu' => 'properties',
             'admin' => $this->session->get('id'),
@@ -138,7 +138,7 @@ class PropertyController extends AbstractController
     {
 
         if ($Property->getSlug() !== $slug){
-            return $this->redirectToRoute('Property.show', [
+            return $this->redirectToRoute('property.show', [
                 'id' => $Property->getId(),
                 'slug'=> $Property->getSlug()
             ], 301);
