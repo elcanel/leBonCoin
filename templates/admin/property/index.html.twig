@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Espace personel' %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Gérer ses biens</h1>
+    </div>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Actions</th>
+            <th>Vendu</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for Property in properties %}
+        <tr>
+            <td>{{ Property.title }}</td>
+            <td>
+
+                <a href="/admin/{{ admin }}/Property/{{ Property.getId() }}" class="btn btn-secondary">Editer</a>
+                <form method="post" action="/admin/{{ admin }}/Property/{{ Property.getId() }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous vraiment sûr de vouloir supprimer votre bien ?')">
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="btn btn-danger">Supprimer</button>
+                </form>
+                {% if Property.sold %}
+                    <td>Vendu</td>
+                {% else %}
+                    <td>Non vendu</td>
+                {% endif %}
+
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="text-right">
+        <a href="/admin/{{ admin }}/Property/create" class="btn btn-primary">Créer un nouveau bien</a>
+    </div>
+
+    <br>
+    <br>
+    <div class="text-center">
+    <a href="/modifier/{{ admin }}" class="btn btn-primary">Editer le profil</a>
+    </div>
+
+
+
+
+{% endblock %}

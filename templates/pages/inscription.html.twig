@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Inscription' %}
+
+{% block body %}
+
+    <div class="container mt-4">
+        <h1>Inscription</h1>
+        {% include "pages/Property/_formInsc.html.twig" with form %}
+    </div>
+
+{% endblock %}

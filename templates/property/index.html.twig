@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Les biens' %}
+
+{% block body %}
+
+    <div class="jumbotron text-center">
+        <h1>Rechercher</h1>
+        <div class="container">
+            {{ form_start(form) }}
+                <div class="form-row align-items-end">
+                    <div class="col">
+                        {{ form_row(form.categorie) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(form.maxPrice) }}
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <button class="btn btn-primary">Rechercher</button>
+                        </div>
+
+                    </div>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row flex">
+            {% for Property in properties %}
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{{ path('Property.show', {id: Property.id, slug: Property.slug}) }}">{{ Property.title }}</a>
+                            </h5>
+                            <p class="card-text">{{ Property.lieu }}</p>
+                            <div class="text-primary" style="font-weight: bold;font-size: 1.5em;">{{ Property.formatedPrice }} € </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}
