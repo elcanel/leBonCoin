@@ -47,4 +47,25 @@ class VehiculesRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+    public function findBySearch(Vehicules $vehi)
+    {
+        $query = $this->findAllQuery();
+
+
+        //dd($query);
+
+        if($vehi->getType()) {
+            $query = $query
+                ->andWhere('a.type = :type')
+                ->setParameter('type', $vehi->getType());
+
+        }
+        //dd($vehi);
+
+
+        return $query->getQuery()->getResult();
+
+    }
 }

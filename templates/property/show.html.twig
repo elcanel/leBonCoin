@@ -11,8 +11,8 @@
                 </div>
                 <div class="col-md-4">
                     <h1>{{ Property.title }}</h1>
-                    <div class="text-primary" style="font-size: 4rem;font-weight:bold;">{{ Property.formatedPrice }} €</div>
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#navbarSupported">
+                    <div class="text-info" style="font-size: 4rem;font-weight:bold;">{{ Property.formatedPrice }} €</div>
+                    <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#navbarSupported">
                         <span class="">Contacter le vendeur</span>
                     </button>
 
@@ -40,6 +40,10 @@
                     <tr>
                         <td>Description</td>
                         <td>{{ Property.description | nl2br }}</td>
+                    </tr>
+                    <tr>
+                        <td>Catégorie</td>
+                        <td>{{ Cat | nl2br }}</td>
                     </tr>
                     <tr>
                         <td>Prix</td>

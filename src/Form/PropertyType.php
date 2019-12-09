@@ -38,19 +38,6 @@ class PropertyType extends AbstractType
 
 
 
-
-/*
-            ->add('immobilier', ImmobilierType::class, [
-                'label' => ' '
-            ])
-            ->add('multimedia', MultimediaType::class, [
-                'label' => ' '
-            ])
-            ->add('vehicules', VehiculesType::class, [
-                'label' => ' '
-            ])
-*/
-
         ;
 
         $formModifier = function (FormInterface $form, Property $Property = null) {

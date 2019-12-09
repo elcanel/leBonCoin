@@ -47,4 +47,32 @@ class ImmobilierRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+    public function findBySearch(Immobilier $immo)
+    {
+        $query = $this->findAllQuery();
+
+
+        //dd($query);
+
+        if($immo->getType()) {
+            $query = $query
+                ->andWhere('a.type = :type')
+                ->setParameter('type', $immo->getType());
+
+        }
+        if($immo->getSurface()){
+            $query = $query
+                ->andWhere('p.surface <= :maxPrice')
+                ->setParameter('maxPrice', $search->getMaxPrice());
+        }
+
+
+        //dd($immo);
+
+
+        return $query->getQuery()->getResult();
+
+    }
 }

@@ -85,15 +85,18 @@ class PropertyRepository extends ServiceEntityRepository
     {
         $query = $this->findVisibleQuery();
 
+        //dd($query);
+
         if($search->getMaxPrice()){
             $query = $query
                 ->andWhere('p.prix <= :maxPrice')
                 ->setParameter('maxPrice', $search->getMaxPrice());
         }
 
-       //dd($search);
 
-        if($search->getCategorie()){
+        //dd($search);
+
+        if($search->getCategorie()) {
             $query = $query
                 ->andWhere('p.cat = :cat')
                 ->setParameter('cat', $search->getCategorie());
@@ -101,24 +104,73 @@ class PropertyRepository extends ServiceEntityRepository
         }
 
 
-
-
-
-/*
-        $query = $this->createQueryBuilder('p')
-            ->andWhere('p.sold = false');
-
-        if($search->getMaxPrice()){
-            $query = $query
-                ->andWhere('p.prix <= :maxPrice')
-                ->setParameter('maxPrice', $search->getMaxPrice());
+        if($search->getCategorie() == 1) {
+            if ($search->getTypeAnim()) {
+                $query = $query
+                    ->andWhere('p.type_anim = :type')
+                    ->setParameter('type', $search->getTypeAnim());
+            }
         }
 
-        if($search->getCategorie()){
-            $query = $query
-                ->andWhere('p.cat == :cat')
-                ->setParameter('cat', $search->getCategorie());
-        }*/
+        if($search->getCategorie() == 2) {
+            if ($search->getTypeImmo()) {
+                $query = $query
+                    ->andWhere('p.type_immo = :type')
+                    ->setParameter('type', $search->getTypeImmo());
+            }
+
+            if ($search->getSurfaceImmo()) {
+                $query = $query
+                    ->andWhere('p.surface_immo = :type')
+                    ->setParameter('type', $search->getSurfaceImmo());
+            }
+
+            if ($search->getNbPieceImmo()) {
+                $query = $query
+                    ->andWhere('p.nb_piece_immo = :type')
+                    ->setParameter('type', $search->getNbPieceImmo());
+            }
+        }
+
+        if($search->getCategorie() == 3) {
+            if ($search->getTypeMulti()) {
+                $query = $query
+                    ->andWhere('p.type_multi = :type')
+                    ->setParameter('type', $search->getTypeMulti());
+            }
+            if ($search->getMarqueMulti()) {
+                $query = $query
+                    ->andWhere('p.marque_multi = :type')
+                    ->setParameter('type', $search->getMarqueMulti());
+            }
+        }
+
+        if($search->getCategorie() == 4) {
+            if ($search->getTypeVehi()) {
+                $query = $query
+                    ->andWhere('p.type_vehi = :type')
+                    ->setParameter('type', $search->getTypeVehi());
+            }
+            if ($search->getNbKmVehi()) {
+                $query = $query
+                    ->andWhere('p.nb_km_vehi = :type')
+                    ->setParameter('type', $search->getNbKmVehi());
+            }
+            if ($search->getEnergieVehi()) {
+                $query = $query
+                    ->andWhere('p.energie_vehi = :type')
+                    ->setParameter('type', $search->getEnergieVehi());
+            }
+            if ($search->getAnneeVehi()) {
+                $query = $query
+                    ->andWhere('p.annee_vehi = :type')
+                    ->setParameter('type', $search->getAnneeVehi());
+            }
+        }
+
+
+
+
 
 
 
@@ -169,5 +221,11 @@ class PropertyRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult()
             ;
+    }
+
+
+    public function findAllAnimals (PropertySearch $search, $query)
+    {
+
     }
 }

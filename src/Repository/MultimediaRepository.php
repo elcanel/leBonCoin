@@ -47,4 +47,25 @@ class MultimediaRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+    public function findBySearch(Multimedia $multi)
+    {
+        $query = $this->findAllQuery();
+
+
+        //dd($query);
+
+        if($multi->getType()) {
+            $query = $query
+                ->andWhere('a.type = :type')
+                ->setParameter('type', $multi->getType());
+
+        }
+        //dd($multi);
+
+
+        return $query->getQuery()->getResult();
+
+    }
 }

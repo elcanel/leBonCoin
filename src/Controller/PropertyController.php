@@ -2,8 +2,11 @@
 namespace App\Controller;
 
 use App\Entity\Animaux;
+use App\Entity\Immobilier;
+use App\Entity\Multimedia;
 use App\Entity\Property;
 use App\Entity\PropertySearch;
+use App\Entity\Vehicules;
 use App\Form\PropertySearchType;
 use App\Repository\PropertyRepository;
 use App\Repository\AdminRepository;
@@ -51,24 +54,56 @@ class PropertyController extends AbstractController
 
         $Property = $this->em->getRepository(Property::class)->findAllVisibleQuery($search);
 
-        //dd($search->getCategorie());
 
 
         if($form->isSubmitted() && $form->isValid()) {
             $search = $form->getData();
+            //dd($search);
 
             $form = $this->createForm(PropertySearchType::class, $search);
             $form->handleRequest($request);
 
-            $Property = $this->em->getRepository(Property::class)->findAllVisibleQuery($search);
+           $Property = $this->em->getRepository(Property::class)->findAllVisibleQuery($search);
 
+            //dd($search);
 
-
-//dd($search->getCategorie());
+/*
             if($search->getCategorie() == 1)
             {
-                $animaux = $this->em->getRepository(Animaux::class)->findAll();
+                $animaux = new Animaux();
+                $properties = $this->em->getRepository(Animaux::class)->findBySearch($animaux);
+
             }
+
+            if($search->getCategorie() == 2)
+            {
+                $immo = new Immobilier();
+                $properties = $this->em->getRepository(Immobilier::class)->findBySearch($immo);
+
+            }
+
+            if($search->getCategorie() == 3)
+            {
+                $multi = new Multimedia();
+                $properties = $this->em->getRepository(Multimedia::class)->findBySearch($multi);
+
+            }
+
+            if($search->getCategorie() == 4)
+            {
+                $vehi = new Vehicules();
+                $properties = $this->em->getRepository(Vehicules::class)->findBySearch($vehi);
+
+            }*/
+
+
+
+
+            return $this->render('property/index.html.twig', [
+                'admin' => $this->session->get('id'),
+                'properties' => $Property,
+                'form' => $form->createView()
+            ]);
         }
 
 
@@ -144,10 +179,21 @@ class PropertyController extends AbstractController
             ], 301);
         }
 
+        switch ($Property->getCat())
+        {
+            case 1 : $cat=Property::CAT[1];break;
+            case 2 : $cat=Property::CAT[2];break;
+            case 3 : $cat=Property::CAT[3];break;
+            case 4 : $cat=Property::CAT[4];break;
+            case 5 : $cat=Property::CAT[5];break;
+            default : $cat=Property::CAT[5];break;
+
+        }
 
 
         return $this->render('property/show.html.twig', [
             'Property' => $Property,
+            'Cat' => $cat,
             'vendeur' => $Property->getUser(),
             'username' => $this->session->get('name'),
             'userphone' => $this->session->get('phone'),

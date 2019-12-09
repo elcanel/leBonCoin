@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Animaux;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Query;
 
 /**
  * @method Animaux|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,4 +49,33 @@ class AnimauxRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findAllQuery()
+    {
+        return $this->createQueryBuilder('a');
+    }
+
+
+
+
+
+    public function findBySearch(Animaux $animaux)
+    {
+        $query = $this->findAllQuery();
+
+
+        //dd($query);
+
+        if($animaux->getType()) {
+            $query = $query
+                ->andWhere('a.type = :type')
+                ->setParameter('type', $animaux->getType());
+
+        }
+        //dd($animaux);
+
+
+        return $query->getQuery()->getResult();
+
+    }
 }
