@@ -75,7 +75,7 @@ class PropertyController extends AbstractController
 
 
             //dd($Property);
-        return $this->render('Property/index.html.twig', [
+        return $this->render('property/index.html.twig', [
             'properties' => $Property,
             'current_menu' => 'properties',
             'admin' => $this->session->get('id'),
@@ -146,7 +146,7 @@ class PropertyController extends AbstractController
 
 
 
-        return $this->render('Property/show.html.twig', [
+        return $this->render('property/show.html.twig', [
             'Property' => $Property,
             'vendeur' => $Property->getUser(),
             'username' => $this->session->get('name'),
