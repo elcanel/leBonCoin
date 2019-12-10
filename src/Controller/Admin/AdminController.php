@@ -58,6 +58,8 @@ class AdminController extends AbstractController {
      */
     public function inscription(Request $request){
 
+
+        //création d'un nouvel utilisateur
         $admin = new Admin();
         $form = $this->createForm(AdminType::class, $admin);
         $form->handleRequest($request);
@@ -81,6 +83,8 @@ class AdminController extends AbstractController {
      */
     public function connexion(Request $request){
 
+
+        //connexion de l'utilisateur
         $form = $this->createForm(AdminConType::class);
         $form->handleRequest($request);
 
@@ -139,6 +143,8 @@ class AdminController extends AbstractController {
      */
     public function deconnexion(Request $request)
     {
+
+        //déconnexion
         $this->session->set('id', null);
         $this->session->set('name', null);
         $this->session->set('mail', null);
@@ -156,7 +162,7 @@ class AdminController extends AbstractController {
      */
     public function modifier(Request $request, Admin $admin){
 
-        //dd($admin);
+        //modification du profil
         $form = $this->createForm(AdminType::class, $admin);
         $form->handleRequest($request);
 

@@ -47,13 +47,13 @@ class PropertyController extends AbstractController
      */
     public function index(Request $request, EntityManagerInterface $em){
 
+
+        //création du formulaire de recherche
         $search = new PropertySearch();
         $form = $this->createForm(PropertySearchType::class, $search);
         $form->handleRequest($request);
 
-
         if($form->isSubmitted() && $form->isValid()) {
-            //dd($search->getCategorie());
 
             $search = $form->getData();
             $form = $this->createForm(PropertySearchType::class, $search);
@@ -61,11 +61,10 @@ class PropertyController extends AbstractController
 
             $search = $form->getData();
 
-            //dd($request);
             $Property = $this->em->getRepository(Property::class)->findAllVisibleQuery($search);
             $properties = array();
 
-
+            //récupération des données suivants le formulaire
             if($search->getCategorie())
             {
                 if($search->getCategorie() == 1)
@@ -89,41 +88,38 @@ class PropertyController extends AbstractController
 
                     $immobiliers = $repository->findBySearch($search, $Property);
 
-                    //dd($animaux);
                     foreach($immobiliers as $immobilier)
                     {
                         $properties[] = $immobilier->getProperty();
 
                     }
                 }
-
                 elseif($search->getCategorie() == 3)
                 {
                     $repository = $em->getRepository(Multimedia::class);
 
                     $multis= $repository->findBySearch($search, $Property);
 
-                    //dd($animaux);
                     foreach($multis as $multi)
                     {
                         $properties[] = $multi->getProperty();
 
                     }
                 }
-
                 elseif($search->getCategorie() == 4)
                 {
                     $repository = $em->getRepository(Vehicules::class);
 
                     $vehis = $repository->findBySearch($search, $Property);
 
-                    //dd($animaux);
                     foreach($vehis as $vehi)
                     {
                         $properties[] = $vehi->getProperty();
 
                     }
                 }
+
+
 
                 return $this->render('property/index.html.twig', [
                     'admin' => $this->session->get('id'),
@@ -212,6 +208,7 @@ class PropertyController extends AbstractController
     public function show(Property $Property, string $slug): Response
     {
 
+        //informations de la page d'un bien
         if ($Property->getSlug() !== $slug){
             return $this->redirectToRoute('Property.show', [
                 'id' => $Property->getId(),

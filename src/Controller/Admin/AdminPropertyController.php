@@ -42,7 +42,7 @@ class AdminPropertyController extends AbstractController {
      */
     public function index(Admin $admin)
     {
-
+        //information d'un utilisateur
         $properties = $this->em->getRepository(Property::class)->findByUser($admin->getId());
         //dd($admin->getId());
         return $this->render('admin/property/index.html.twig', [
@@ -59,6 +59,7 @@ class AdminPropertyController extends AbstractController {
      */
     public function new(Request $request, Admin $admin){
 
+        //création d'un nouveau bien
         $Property = new Property();
         $Property->setIdUser($admin->getId());
         $Property->setUser($admin);
@@ -103,7 +104,7 @@ class AdminPropertyController extends AbstractController {
     public function edit( Property $Property, Request $request)
     {
 
-
+        //modification d'un bien existant
         $form = $this->createForm(PropertyType::class, $Property);
         $form->handleRequest($request);
 
@@ -126,7 +127,8 @@ class AdminPropertyController extends AbstractController {
      */
     public function delete(Property $Property) {
 
-        //dd($Property->getAnimaux());
+
+        //suppression d'un bien
 
         $this->em->remove($Property);
         $this->em->flush();
