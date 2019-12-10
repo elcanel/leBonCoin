@@ -26,12 +26,12 @@ class PropertySearchType extends AbstractType {
     {
         $builder
             ->add('categorie', ChoiceType::class, [
-                'attr' => [
-                    'placeholder' => 'Catégorie'],
+
                 'label' => false,
                 'required' => false,
-                'choices' => $this->getChoices()
-
+                'choices' => [
+                    'Catégorie' => $this->getChoices()
+                    ]
             ])
             ->add('maxPrice', IntegerType::class, [
                 'required' => false,
@@ -46,6 +46,7 @@ class PropertySearchType extends AbstractType {
 
         $formModifier = function (FormInterface $form, PropertySearch $PropertySearch) {
             //dd($PropertySearch);
+
             if($PropertySearch->getCategorie() == 1){
                 $form
                     ->add('type_anim', ChoiceType::class, [
@@ -53,7 +54,9 @@ class PropertySearchType extends AbstractType {
                         'placeholder' => 'Type d\'animal'],
                     'required' => false,
                     'label' => false,
-                    'choices' => $this->getAnimaux()
+                        'choices' => [
+                            'Type d\'animal' => $this->getAnimaux()
+                        ]
                 ]);
             }
 
@@ -65,7 +68,9 @@ class PropertySearchType extends AbstractType {
                         'placeholder' => 'Type de bien'],
                     'required' => false,
                     'label' => false,
-                    'choices' => $this->getImmos()
+                        'choices' => [
+                            'Type de bien immobilier' => $this->getImmos()
+                        ]
                     ])
                     ->add('surface_immo', IntegerType::class, [
                     'attr' => [
@@ -87,7 +92,9 @@ class PropertySearchType extends AbstractType {
                             'placeholder' => 'Type de multimédia'],
                         'required' => false,
                         'label' => false,
-                        'choices' => $this->getMultis()
+                        'choices' => [
+                            'Type de multimédia' => $this->getMultis()
+                        ]
                     ])
                     ->add('marque_multi', TextType::class, [
                     'attr' => [
@@ -104,7 +111,9 @@ class PropertySearchType extends AbstractType {
                         'placeholder' => 'Type de véhicule'],
                     'required' => false,
                         'label' => false,
-                        'choices' => $this->getVehis()
+                        'choices' => [
+                            'Type de véhicule' => $this->getVehis()
+                        ]
                     ])
                     ->add('nb_km_vehi', IntegerType::class, [
                     'attr' => [

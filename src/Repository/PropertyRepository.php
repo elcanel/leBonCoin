@@ -157,6 +157,8 @@ class PropertyRepository extends ServiceEntityRepository
     }
 
 
+
+
     public function findAllAnimals (PropertySearch $search, $query)
     {
 

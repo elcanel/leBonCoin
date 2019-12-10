@@ -53,24 +53,28 @@ class PropertyController extends AbstractController
 
 
         if($form->isSubmitted() && $form->isValid()) {
+            //dd($search->getCategorie());
 
             $search = $form->getData();
             $form = $this->createForm(PropertySearchType::class, $search);
             $form->handleRequest($request);
 
+            $search = $form->getData();
+
             //dd($request);
             $Property = $this->em->getRepository(Property::class)->findAllVisibleQuery($search);
             $properties = array();
+
 
             if($search->getCategorie())
             {
                 if($search->getCategorie() == 1)
                 {
+
                     $repository = $em->getRepository(Animaux::class);
 
                     $animaux = $repository->findBySearch($search, $Property);
 
-                    //dd($animaux);
                     foreach($animaux as $animal)
                     {
                         $properties[] = $animal->getProperty();
