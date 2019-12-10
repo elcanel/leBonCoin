@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Animaux;
+use App\Entity\Property;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use App\Entity\PropertySearch;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
 
@@ -59,20 +61,20 @@ class AnimauxRepository extends ServiceEntityRepository
 
 
 
-    public function findBySearch(Animaux $animaux)
+    public function findBySearch(PropertySearch $search, $property)
     {
-        $query = $this->findAllQuery();
+        $query = $this->createQueryBuilder('a')
+            ->andWhere('a.property IN (:property)')
+            ->setParameter('property', $property);
 
+        //dd($search->getTypeAnim());
 
-        //dd($query);
-
-        if($animaux->getType()) {
+        if($search->getTypeAnim()) {
             $query = $query
                 ->andWhere('a.type = :type')
-                ->setParameter('type', $animaux->getType());
-
+                ->setParameter('type', $search->getTypeAnim());
         }
-        //dd($animaux);
+        //dd($search);
 
 
         return $query->getQuery()->getResult();

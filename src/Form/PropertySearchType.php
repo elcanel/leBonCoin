@@ -45,86 +45,84 @@ class PropertySearchType extends AbstractType {
 
 
         $formModifier = function (FormInterface $form, PropertySearch $PropertySearch) {
-            if($PropertySearch)
-            {
-                //dd($PropertySearch);
-                if($PropertySearch->getCategorie() == 1){
-                    $form
-                        ->add('type_anim', ChoiceType::class, [
-                        'attr' => [
-                            'placeholder' => 'Type d\'animal'],
-                        'required' => false,
-                        'label' => false,
-                        'choices' => $this->getAnimaux()
-                    ]);
-                }
-
-
-                if($PropertySearch->getCategorie() == 2){
-                    $form
-                        ->add('type_immo', ChoiceType::class, [
-                        'attr' => [
-                            'placeholder' => 'Type de bien'],
-                        'required' => false,
-                        'label' => false,
-                        'choices' => $this->getImmos()
-                        ])
-                        ->add('surface_immo', IntegerType::class, [
-                        'attr' => [
-                            'placeholder' => 'Surface'],
-                        'required' => false,
-                            'label' => false ])
-                        ->add( 'nb_piece_immo', IntegerType::class, [
-                        'attr' => [
-                            'placeholder' => 'Nombre de pièce'],
-                        'required' => false,
-                            'label' => false ]);
-                }
-
-
-                if($PropertySearch->getCategorie() == 3){
-                    $form
-                        ->add('type_multi', ChoiceType::class, [
-                            'attr' => [
-                                'placeholder' => 'Type de multimédia'],
-                            'required' => false,
-                            'label' => false,
-                            'choices' => $this->getMultis()
-                        ])
-                        ->add('marque_multi', TextType::class, [
-                        'attr' => [
-                            'placeholder' => 'Marque'],
-                        'required' => false,
-                            'label' => false ]);
-                }
-
-
-                if($PropertySearch->getCategorie() == 4){
-                    $form
-                        ->add('type_vehi', ChoiceType::class, [
-                        'attr' => [
-                            'placeholder' => 'Type de véhicule'],
-                        'required' => false,
-                            'label' => false,
-                            'choices' => $this->getVehis()
-                        ])
-                        ->add('nb_km_vehi', IntegerType::class, [
-                        'attr' => [
-                            'placeholder' => 'Nombre de km'],
-                        'required' => false,
-                            'label' => false ])
-                        ->add( 'energie_vehi', TextType::class, [
-                        'attr' => [
-                            'placeholder' => 'Type d\'énergie'],
-                        'required' => false,
-                            'label' => false ])
-                        ->add('annee_vehi', IntegerType::class, [
-                        'attr' => [
-                            'placeholder' => 'Année'],
-                        'required' => false,
-                            'label' => false ]);
-                }
+            //dd($PropertySearch);
+            if($PropertySearch->getCategorie() == 1){
+                $form
+                    ->add('type_anim', ChoiceType::class, [
+                    'attr' => [
+                        'placeholder' => 'Type d\'animal'],
+                    'required' => false,
+                    'label' => false,
+                    'choices' => $this->getAnimaux()
+                ]);
             }
+
+
+            if($PropertySearch->getCategorie() == 2){
+                $form
+                    ->add('type_immo', ChoiceType::class, [
+                    'attr' => [
+                        'placeholder' => 'Type de bien'],
+                    'required' => false,
+                    'label' => false,
+                    'choices' => $this->getImmos()
+                    ])
+                    ->add('surface_immo', IntegerType::class, [
+                    'attr' => [
+                        'placeholder' => 'Surface'],
+                    'required' => false,
+                        'label' => false ])
+                    ->add( 'nb_piece_immo', IntegerType::class, [
+                    'attr' => [
+                        'placeholder' => 'Nombre de pièce'],
+                    'required' => false,
+                        'label' => false ]);
+            }
+
+
+            if($PropertySearch->getCategorie() == 3){
+                $form
+                    ->add('type_multi', ChoiceType::class, [
+                        'attr' => [
+                            'placeholder' => 'Type de multimédia'],
+                        'required' => false,
+                        'label' => false,
+                        'choices' => $this->getMultis()
+                    ])
+                    ->add('marque_multi', TextType::class, [
+                    'attr' => [
+                        'placeholder' => 'Marque'],
+                    'required' => false,
+                        'label' => false ]);
+            }
+
+
+            if($PropertySearch->getCategorie() == 4){
+                $form
+                    ->add('type_vehi', ChoiceType::class, [
+                    'attr' => [
+                        'placeholder' => 'Type de véhicule'],
+                    'required' => false,
+                        'label' => false,
+                        'choices' => $this->getVehis()
+                    ])
+                    ->add('nb_km_vehi', IntegerType::class, [
+                    'attr' => [
+                        'placeholder' => 'Nombre de km'],
+                    'required' => false,
+                        'label' => false ])
+                    ->add( 'energie_vehi', TextType::class, [
+                    'attr' => [
+                        'placeholder' => 'Type d\'énergie'],
+                    'required' => false,
+                        'label' => false ])
+                    ->add('annee_vehi', IntegerType::class, [
+                    'attr' => [
+                        'placeholder' => 'Année'],
+                    'required' => false,
+                        'label' => false ]);
+            }
+
         };
 
 

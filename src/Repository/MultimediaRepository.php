@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Multimedia;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use App\Entity\PropertySearch;
 
 /**
  * @method Multimedia|null find($id, $lockMode = null, $lockVersion = null)
@@ -49,20 +50,30 @@ class MultimediaRepository extends ServiceEntityRepository
     */
 
 
-    public function findBySearch(Multimedia $multi)
+    public function findBySearch(PropertySearch $search, $property)
     {
-        $query = $this->findAllQuery();
 
 
+        $query = $this->createQueryBuilder('i')
+            ->andWhere('i.property IN (:property)')
+            ->setParameter('property', $property);
         //dd($query);
 
-        if($multi->getType()) {
-            $query = $query
-                ->andWhere('a.type = :type')
-                ->setParameter('type', $multi->getType());
 
+
+
+
+        if ($search->getTypeMulti()) {
+            $query = $query
+                ->andWhere('m.type = :type')
+                ->setParameter('type', $search->getTypeMulti());
         }
-        //dd($multi);
+        if ($search->getMarqueMulti()) {
+            $query = $query
+                ->andWhere('m.marque = :marque')
+                ->setParameter('marque', $search->getMarqueMulti());
+        }
+
 
 
         return $query->getQuery()->getResult();

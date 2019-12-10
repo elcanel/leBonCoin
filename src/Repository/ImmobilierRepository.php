@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Immobilier;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use App\Entity\PropertySearch;
 
 /**
  * @method Immobilier|null find($id, $lockMode = null, $lockVersion = null)
@@ -49,27 +50,33 @@ class ImmobilierRepository extends ServiceEntityRepository
     */
 
 
-    public function findBySearch(Immobilier $immo)
+    public function findBySearch(PropertySearch $search, $property)
     {
-        $query = $this->findAllQuery();
-
-
+        $query = $this->createQueryBuilder('i')
+            ->andWhere('i.property IN (:property)')
+            ->setParameter('property', $property);
         //dd($query);
 
-        if($immo->getType()) {
-            $query = $query
-                ->andWhere('a.type = :type')
-                ->setParameter('type', $immo->getType());
 
-        }
-        if($immo->getSurface()){
+
+        if ($search->getTypeImmo()) {
             $query = $query
-                ->andWhere('p.surface <= :maxPrice')
-                ->setParameter('maxPrice', $search->getMaxPrice());
+                ->andWhere('i.type = :type')
+                ->setParameter('type', $search->getTypeImmo());
         }
 
+        if ($search->getSurfaceImmo()) {
+            $query = $query
+                ->andWhere('i.surface = :surface')
+                ->setParameter('surface', $search->getSurfaceImmo());
+        }
 
-        //dd($immo);
+        if ($search->getNbPieceImmo()) {
+            $query = $query
+                ->andWhere('i.nb_piece = :nb_piece')
+                ->setParameter('nb_piece', $search->getNbPieceImmo());
+        }
+
 
 
         return $query->getQuery()->getResult();

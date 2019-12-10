@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
 class PropertyController extends AbstractController
 {
@@ -43,73 +44,108 @@ class PropertyController extends AbstractController
 
     /**
      * @Route("/biens", name="Property.index")
-     * @return Response
      */
-    public function index(Request $request): Response {
+    public function index(Request $request, EntityManagerInterface $em){
 
         $search = new PropertySearch();
         $form = $this->createForm(PropertySearchType::class, $search);
         $form->handleRequest($request);
 
 
-        $Property = $this->em->getRepository(Property::class)->findAllVisibleQuery($search);
-
-
-
         if($form->isSubmitted() && $form->isValid()) {
-            $search = $form->getData();
-            //dd($search);
 
+            $search = $form->getData();
             $form = $this->createForm(PropertySearchType::class, $search);
             $form->handleRequest($request);
 
-           $Property = $this->em->getRepository(Property::class)->findAllVisibleQuery($search);
+            //dd($request);
+            $Property = $this->em->getRepository(Property::class)->findAllVisibleQuery($search);
+            $properties = array();
 
-            //dd($search);
-
-/*
-            if($search->getCategorie() == 1)
+            if($search->getCategorie())
             {
-                $animaux = new Animaux();
-                $properties = $this->em->getRepository(Animaux::class)->findBySearch($animaux);
+                if($search->getCategorie() == 1)
+                {
+                    $repository = $em->getRepository(Animaux::class);
 
+                    $animaux = $repository->findBySearch($search, $Property);
+
+                    //dd($animaux);
+                    foreach($animaux as $animal)
+                    {
+                        $properties[] = $animal->getProperty();
+
+                    }
+
+
+                }
+                elseif($search->getCategorie() == 2)
+                {
+                    $repository = $em->getRepository(Immobilier::class);
+
+                    $immobiliers = $repository->findBySearch($search, $Property);
+
+                    //dd($animaux);
+                    foreach($immobiliers as $immobilier)
+                    {
+                        $properties[] = $immobilier->getProperty();
+
+                    }
+                }
+
+                elseif($search->getCategorie() == 3)
+                {
+                    $repository = $em->getRepository(Multimedia::class);
+
+                    $multis= $repository->findBySearch($search, $Property);
+
+                    //dd($animaux);
+                    foreach($multis as $multi)
+                    {
+                        $properties[] = $multi->getProperty();
+
+                    }
+                }
+
+                elseif($search->getCategorie() == 4)
+                {
+                    $repository = $em->getRepository(Vehicules::class);
+
+                    $vehis = $repository->findBySearch($search, $Property);
+
+                    //dd($animaux);
+                    foreach($vehis as $vehi)
+                    {
+                        $properties[] = $vehi->getProperty();
+
+                    }
+                }
+
+                return $this->render('property/index.html.twig', [
+                    'admin' => $this->session->get('id'),
+
+                    'current_menu' => 'properties',
+                    'properties' => $properties,
+                    'form' => $form->createView()
+                ]);
             }
 
-            if($search->getCategorie() == 2)
-            {
-                $immo = new Immobilier();
-                $properties = $this->em->getRepository(Immobilier::class)->findBySearch($immo);
 
-            }
-
-            if($search->getCategorie() == 3)
-            {
-                $multi = new Multimedia();
-                $properties = $this->em->getRepository(Multimedia::class)->findBySearch($multi);
-
-            }
-
-            if($search->getCategorie() == 4)
-            {
-                $vehi = new Vehicules();
-                $properties = $this->em->getRepository(Vehicules::class)->findBySearch($vehi);
-
-            }*/
 
 
 
 
             return $this->render('property/index.html.twig', [
                 'admin' => $this->session->get('id'),
+                'current_menu' => 'properties',
                 'properties' => $Property,
                 'form' => $form->createView()
             ]);
         }
 
+        $Property = $this->em->getRepository(Property::class)->findAllVisibleQuery($search);
 
 
-
-            //dd($Property);
         return $this->render('property/index.html.twig', [
             'properties' => $Property,
             'current_menu' => 'properties',

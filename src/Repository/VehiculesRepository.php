@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Vehicules;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use App\Entity\PropertySearch;
 
 /**
  * @method Vehicules|null find($id, $lockMode = null, $lockVersion = null)
@@ -49,20 +50,36 @@ class VehiculesRepository extends ServiceEntityRepository
     */
 
 
-    public function findBySearch(Vehicules $vehi)
+    public function findBySearch(PropertySearch $search, $property)
     {
-        $query = $this->findAllQuery();
+        $query = $this->createQueryBuilder('a')
+            ->andWhere('a.property IN (:property)')
+            ->setParameter('property', $property);
 
 
-        //dd($query);
 
-        if($vehi->getType()) {
+        if ($search->getTypeVehi()) {
             $query = $query
-                ->andWhere('a.type = :type')
-                ->setParameter('type', $vehi->getType());
-
+                ->andWhere('v.type = :type')
+                ->setParameter('type', $search->getTypeVehi());
         }
-        //dd($vehi);
+        if ($search->getNbKmVehi()) {
+            $query = $query
+                ->andWhere('v.nb_km = :nb_km')
+                ->setParameter('nb_km', $search->getNbKmVehi());
+        }
+        if ($search->getEnergieVehi()) {
+            $query = $query
+                ->andWhere('v.energie = :ene')
+                ->setParameter('ene', $search->getEnergieVehi());
+        }
+        if ($search->getAnneeVehi()) {
+            $query = $query
+                ->andWhere('v.annee = :an')
+                ->setParameter('an', $search->getAnneeVehi());
+        }
+
+
 
 
         return $query->getQuery()->getResult();

@@ -30,7 +30,7 @@ class Admin
     private $mail;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=15, nullable=true)
      * @Assert\Length(min=10, max=10)
      */
     private $phone;
@@ -95,7 +95,7 @@ class Admin
         return $this->phone;
     }
 
-    public function setPhone(?int $phone): self
+    public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
 
